@@ -1,0 +1,94 @@
+@import "./transform";
+
+/**
+ * http://hugogiraudel.com/2013/04/02/items-on-circle/
+ * Mixin to put items on a circle
+ * [1] - Allows children to be absolutely positioned
+ * [2] - Allows the mixin to be used on a list
+ * [3] - In case box-sizing: border-box has been enabled
+ * [4] - Allows any type of direct children to be targeted
+ */
+
+@mixin putOnCircle(
+          $nb-items, //Number of items
+          $circle-size, //Parent size
+          $item-size, //Item size
+          $class-for-IE: false //Base class name, false means use of pseudo-selectors
+       ) {
+  $half-item:     $item-size / 2;
+  $half-parent: $circle-size / 2;
+
+  $positions_data: "r", "br", "bl", "l", "tl", "tr";
+
+  position: relative;               /* [1] */
+  width:  $circle-size;
+  height: $circle-size;
+  padding: 0;
+  border-radius: 50%;
+  list-style: none;                 /* [2] */
+  border-box: content-box; /* [3] */
+
+  $cross_width: 2vw;
+  $cross_height: $cross_width;
+  .cross {
+    width: $cross_width;
+    height: $cross_height;
+    overflow: hidden;
+    position: absolute;
+    margin: 0;
+    padding: 0;
+    left: $half-parent - ($cross_width / 2);
+    top: $half-parent - ($cross_height / 2);
+    .cross-vertical {
+      position: absolute;
+      left: $cross_width / 2;
+      top: 0;
+      width: $cross_width;
+      height: $cross_height;
+      border-left: 1px solid white;
+    }
+    .cross-horizontal {
+      position: absolute;
+      top: $cross_height / 2;
+      width: $cross_width;
+      height: $cross_height;
+      border-top: 1px solid white;
+    }
+  }
+
+  > * {                             /* [4] */
+    display: block;
+    position: absolute;
+    top:  50%;
+    left: 50%;
+    width:  $item-size;
+    height: $item-size;
+    margin: -$half-item;
+
+    $angle: 360 / $nb-items;
+    $rot: 0;
+    @for $i from 1 to $nb-items+1 {
+
+      // If no support for IE8-
+      @if $class-for-IE == false {
+        // &:nth-of-type(#{$i}) ,
+        &[data-position="#{nth($positions_data, $i)}"] {
+          @include transform(rotate(#{$rot}deg) translate($half-parent) rotate(-#{$rot}deg));
+        }
+      }
+
+      // If support for IE8-
+
+      @else {
+        &.#{$class-for-IE}#{$i} {
+          // If CSS transforms are not supported
+          $mt: sin($rot * pi() / 180) * $half-parent - $half-item;
+          $ml: cos($rot * pi() / 180) * $half-parent - $half-item;
+          margin: $mt 0 0 $ml;
+        }
+      }
+
+      $rot: $rot + $angle;
+    }
+  }
+}
