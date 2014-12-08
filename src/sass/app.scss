@@ -1,6 +1,8 @@
 @import "./vendor/normalize";
+@import "./core/utils";
 @import "./mixins/points_in_circle";
 
+$placeholder_color: #444;
 body {
   background: black;
   color: white;
@@ -24,6 +26,9 @@ body {
   .content {
     flex-grow: 2;
   }
+}
+.content {
+  position: relative;
 }
 
 header {
@@ -78,3 +83,28 @@ header {
     }
   }
 }
+
+.vas-question {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  .vas-question-input {
+    width: 20vw;
+    input {
+      background-color: rgba(255, 255, 255, 0.1);
+      border: 1px solid white;
+      border-radius: 4px;
+      padding: 1vw;
+      width: 100%;
+      font-size: 2vw;
+      text-transform: uppercase;
+      &::-webkit-input-placeholder {
+        color: $placeholder_color;
+        text-transform: none;
+      }
+    }
+  }
+}
+

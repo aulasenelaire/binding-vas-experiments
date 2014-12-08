@@ -9,9 +9,6 @@ var React = require('react')
 
 VasDisplay = React.createClass({
   render: function() {
-    // duration: <strong>{this.props.trial.get('duration')}</strong>
-    // <br />
-    // count: <strong>{this.props.trial.get('count')}</strong>
     return (<div className="vas-display">
       <ul className="letters">
         {_.map(this.props.trial.get('letters'), function (letter) {

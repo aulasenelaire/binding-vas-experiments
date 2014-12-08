@@ -1,0 +1,10 @@
+.absolute-postitioned {
+  position: absolute;
+}
+.full-expanded {
+  @extend .absolute-postitioned;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}

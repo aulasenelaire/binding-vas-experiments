@@ -320,6 +320,15 @@ table {
 td, th {
   padding: 0; }
 
+.absolute-postitioned, .full-expanded {
+  position: absolute; }
+
+.full-expanded {
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0; }
+
 /**
  * http://hugogiraudel.com/2013/04/02/items-on-circle/
  * Mixin to put items on a circle
@@ -347,6 +356,9 @@ body {
   align-items: stretch; }
   .wrapper .content {
     flex-grow: 2; }
+
+.content {
+  position: relative; }
 
 header {
   text-align: right;
@@ -462,3 +474,22 @@ header {
     align-items: center; }
     .vas-display .letters li span {
       font-size: 2vw; }
+
+.vas-question {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center; }
+  .vas-question .vas-question-input {
+    width: 20vw; }
+    .vas-question .vas-question-input input {
+      background-color: rgba(255, 255, 255, 0.1);
+      border: 1px solid white;
+      border-radius: 4px;
+      padding: 1vw;
+      width: 100%;
+      font-size: 2vw;
+      text-transform: uppercase; }
+      .vas-question .vas-question-input input::-webkit-input-placeholder {
+        color: #444;
+        text-transform: none; }

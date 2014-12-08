@@ -9,6 +9,7 @@ var React = require('react')
   , FluxBone = require('../../react-mixins/flux-bone.js')
   , vasTrialsStore = require('../../stores/vas-trials.js')
   , VasDisplay = require('./display.js')
+  , VasQuestion = require('./question.js')
   , VasComponent;
 
 VasComponent = React.createClass({
@@ -31,9 +32,9 @@ VasComponent = React.createClass({
       }
     });
     var self = this;
-    // _.delay(function () {
-    //   self.setState({display: false});
-    // }, self.props.trial.get('duration'));
+    _.delay(function () {
+      self.setState({display: false});
+    }, self.props.trial.get('duration'));
   }
 , render: function() {
     var component;
@@ -43,15 +44,7 @@ VasComponent = React.createClass({
     } else if (this.state.display) {
       component = <VasDisplay trial={this.props.trial}></VasDisplay>;
     } else {
-      component = <div>Trial answer {this.props.trial.get('duration')} - {this.props.trial.get('count')}
-        <ul>
-        {_.map(this.props.trial.get('letters'), function (letter) {
-          return (<li data-position={letter.position}>
-            <span>{letter.value.toUpperCase()}</span>
-          </li>);
-        })}
-        </ul>
-      </div>;
+      component = <VasQuestion trial={this.props.trial}></VasQuestion>;
     }
 
     return component;
