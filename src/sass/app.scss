@@ -69,7 +69,7 @@ header {
   .letters {
     @include putOnCircle(6, 30vw, 6vw, false);
     margin: 20vh auto 0;
-    border: 1px solid #222;
+    border: 1px solid transparent;
 
     li {
       display: flex;

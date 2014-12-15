@@ -8,14 +8,23 @@ var React = require('react')
   , VasQuestion;
 
 VasQuestion = React.createClass({
-  componentDidMount: function() {
+  handleKeyDown: function(event) {
+    if (event.keyCode === 13) {
+      return Dispatcher.dispatch({
+        actionType: 'vas-trial-response'
+      , trial: this.props.trial
+      , response: this.refs.question.getDOMNode().value
+      });
+    }
+  }
+, componentDidMount: function() {
     var question = this.refs.question;
     question.getDOMNode().focus();
   }
 , render: function() {
     return (<div className="full-expanded vas-question">
         <div className="vas-question-input">
-          <input ref="question" type="text" placeholder="¿Qué letras has visto?" />
+          <input ref="question" type="text" placeholder="¿Qué letras has visto?" onKeyDown={this.handleKeyDown} />
         </div>
       </div>);
   }

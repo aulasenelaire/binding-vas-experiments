@@ -3,28 +3,20 @@
 var Backbone = require("backbone")
   , _ = require("underscore")
   , Dispatcher = require('../dispatcher.js')
+  , vasTrialModel = require('../models/vas-trial.js')
   , vasTrialIStore
-  , vasTrialItem
   , Collection;
 
-vasTrialItem = Backbone.Model.extend({
-  defaults: function() {
-    return {
-      executed : false
-    };
-  }
-});
-
 Collection = Backbone.Collection.extend({
-    model: vasTrialItem
+    model: vasTrialModel
   , initialize: function () {
       _.bindAll(this, 'dispatchCallback');
       this.dispatchToken = Dispatcher.register(this.dispatchCallback);
     }
   , dispatchCallback: function (payload) {
       switch(payload.actionType) {
-        case 'vas-trial-add':
-          this.add(payload.todo);
+      case 'vas-trial-response':
+        payload.trial.updateTrialWithResponse(payload);
       }
     }
   , getRandomTrial: function (payload) {

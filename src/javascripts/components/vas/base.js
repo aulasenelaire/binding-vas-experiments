@@ -23,6 +23,7 @@ VasComponent = React.createClass({
 , getInitialState: function() {
     return {
       display: true
+    , display_cross_time: 200
     };
   }
 , componentDidMount: function () {
@@ -34,7 +35,7 @@ VasComponent = React.createClass({
     var self = this;
     _.delay(function () {
       self.setState({display: false});
-    }, self.props.trial.get('duration'));
+    }, self.props.trial.get('duration') + self.state.display_cross_time);
   }
 , render: function() {
     var component;
@@ -42,7 +43,7 @@ VasComponent = React.createClass({
     if (!this.props.trial) {
       component = <div>NO more trials</div>;
     } else if (this.state.display) {
-      component = <VasDisplay trial={this.props.trial}></VasDisplay>;
+      component = <VasDisplay trial={this.props.trial} display_cross_time={this.state.display_cross_time}></VasDisplay>;
     } else {
       component = <VasQuestion trial={this.props.trial}></VasQuestion>;
     }
