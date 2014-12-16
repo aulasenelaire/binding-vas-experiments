@@ -1,4 +1,5 @@
 var Backbone = require("backbone")
+  , Router = require('react-router')
   , Model
   , _ = require("underscore");
 
@@ -22,14 +23,16 @@ Model.getPositions = function () {
   });
 };
 
-Model.getFailedLetters = function (response) {
-  var letters = this.getLetters();
-  return _.difference(letters, response);
+Model.getMissedLetters = function (response) {
+  return _.difference(this.getLetters(), response);
 };
 
 Model.getSuccessLetters = function (response) {
-  var letters = this.getLetters();
-  return _.intersection(letters, response);
+  return _.intersection(this.getLetters(), response);
+};
+
+Model.getFailedLetters = function (response) {
+  return _.difference(response, this.getLetters());
 };
 
 Model.updateTrialWithResponse = function (playload) {
@@ -37,20 +40,23 @@ Model.updateTrialWithResponse = function (playload) {
     , letters = this.getLetters()
     , new_attributes = {}
     , response = playload.response.split('')
+    , missed_letters = this.getMissedLetters(response)
+    , successes_letters = this.getSuccessLetters(response)
     , failed_letters = this.getFailedLetters(response)
-    , successes_letters = this.getSuccessLetters(response);
+    , all_ok = !missed_letters.length;
 
   new_attributes = {
     executed: true
-  , successes_count: letters.length - failed_letters.length
-  , fails_count: failed_letters.length
+  , successes_count: letters.length - missed_letters.length
+  , missed_count: missed_letters.length
   , response_letters: response.join('')
-  , failed_letters: failed_letters.join('')
+  , missed_letters: missed_letters.join('')
   , successes_letters: successes_letters.join('')
+  , failed_letters: failed_letters.join('')
   , letters: letters.join('')
+  , all_ok: all_ok
   };
-  console.log(new_attributes);
-  // this.set(new_attributes);
+  this.set(new_attributes);
 };
 
 module.exports = Backbone.Model.extend(Model);

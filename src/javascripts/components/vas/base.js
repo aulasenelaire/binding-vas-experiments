@@ -4,51 +4,40 @@
 
 var React = require('react')
   , _ = require("underscore")
-  , Screenfull = require('screenfull')
-  , Dispatcher = require('../../dispatcher.js')
-  , FluxBone = require('../../react-mixins/flux-bone.js')
   , vasTrialsStore = require('../../stores/vas-trials.js')
-  , VasDisplay = require('./display.js')
-  , VasQuestion = require('./question.js')
+  , Player = require('./player.js')
+  , vas_store
   , VasComponent;
 
 VasComponent = React.createClass({
-  mixins: [FluxBone('vasTrialsStore')]
-, getDefaultProps: function () {
+  getDefaultProps: function() {
     return {
       vasTrialsStore: vasTrialsStore
-    , trial: vasTrialsStore.getRandomTrial()
     };
   }
 , getInitialState: function() {
     return {
-      display: true
-    , display_cross_time: 200
+      trial: vasTrialsStore.getRandomTrial()
     };
   }
+, handleChange: function (bar) {
+    if (this.state.trial.get('executed')) {
+      this.setState({
+        trial: this.props.vasTrialsStore.getRandomTrial()
+      });
+    }
+  }
+, componentDidUpdate: function () {
+    this.state.trial.on('change', this.handleChange);
+  }
 , componentDidMount: function () {
-    document.getElementById('button-full-screen').addEventListener('click', function () {
-      if (Screenfull.enabled) {
-        Screenfull.request();
-      }
-    });
-    var self = this;
-    _.delay(function () {
-      self.setState({display: false});
-    }, self.props.trial.get('duration') + self.state.display_cross_time);
+    this.state.trial.on('change', this.handleChange);
+  }
+, willComponentUnmount: function () {
+    this.state.trial.off('change', this.handleChange);
   }
 , render: function() {
-    var component;
-
-    if (!this.props.trial) {
-      component = <div>NO more trials</div>;
-    } else if (this.state.display) {
-      component = <VasDisplay trial={this.props.trial} display_cross_time={this.state.display_cross_time}></VasDisplay>;
-    } else {
-      component = <VasQuestion trial={this.props.trial}></VasQuestion>;
-    }
-
-    return component;
+    return <Player trial={this.state.trial}></Player>;
   }
 });
 
