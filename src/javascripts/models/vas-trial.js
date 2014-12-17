@@ -55,6 +55,7 @@ Model.updateTrialWithResponse = function (playload) {
   , failed_letters: failed_letters.join('')
   , letters: letters.join('')
   , all_ok: all_ok
+  , executed_time: new Date()
   };
   this.set(new_attributes);
 };

@@ -13,6 +13,9 @@ Collection = Backbone.Collection.extend({
       _.bindAll(this, 'dispatchCallback');
       this.dispatchToken = Dispatcher.register(this.dispatchCallback);
     }
+  , comparator: function(model) {
+      return model.get('executed_time').getTime();
+    }
   , dispatchCallback: function (payload) {
       switch(payload.actionType) {
       case 'vas-trial-response':
@@ -49,6 +52,7 @@ Collection = Backbone.Collection.extend({
             , count: number
             , duration: duration
             , letters: letters
+            , executed_time: new Date()
             };
 
             trials.push(trial);

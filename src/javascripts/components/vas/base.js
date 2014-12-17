@@ -37,7 +37,15 @@ VasComponent = React.createClass({
     this.state.trial.off('change', this.handleChange);
   }
 , render: function() {
-    return <Player trial={this.state.trial}></Player>;
+    var executed_list = _.sortBy(this.props.vasTrialsStore.where({executed: true}), function (trial) {return trial.get('executed_time')})
+      , executed = this.props.vasTrialsStore.where({executed: true}).length
+      , all_ok = this.props.vasTrialsStore.where({all_ok: true}).length
+      , all = this.props.vasTrialsStore.length;
+    return (<div>
+      executed: <span>{executed}/{all}</span><br />
+      All ok: <span>{all_ok}</span>
+      <Player trial={this.state.trial}></Player>
+    </div>);
   }
 });
 

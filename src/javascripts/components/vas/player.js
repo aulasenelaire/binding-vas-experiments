@@ -14,7 +14,7 @@ Player = React.createClass({
   getInitialState: function() {
     return {
       display: true
-    , display_cross_time: 200
+    , display_cross_time: 250
     };
   }
 , componentWillReceiveProps: function() {
