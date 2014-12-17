@@ -20,8 +20,8 @@ App = React.createClass({
         <header>
           <button id='button-full-screen'>Open Full Screen</button>
           <ul>
-            <li><Link to='/todos'>Todos</Link></li>
-            <li><Link to='/vas'>VAS</Link></li>
+            <li><Link to='todos'>Todos</Link></li>
+            <li><Link to='vas'>VAS</Link></li>
           </ul>
         </header>
         <div id="content" className="content">
@@ -34,7 +34,7 @@ App = React.createClass({
 
 routes = (
   <Routes location="history">
-    <Route name="app" path="/" handler={App}>
+    <Route name="app" path="/demo-vas-task-global" handler={App}>
       <Route name="todos" handler={TodoListComponent}/>
       <Route name="vas" handler={VasComponent}/>
     </Route>
