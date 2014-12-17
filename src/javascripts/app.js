@@ -33,8 +33,8 @@ App = React.createClass({
 });
 
 routes = (
-  <Routes location="history">
-    <Route name="app" path="/demo-vas-task-global" handler={App}>
+  <Routes location="hash" ignoreTrailingSlash={true}>
+    <Route name="app" path="/" handler={App}>
       <Route name="todos" handler={TodoListComponent}/>
       <Route name="vas" handler={VasComponent}/>
     </Route>
