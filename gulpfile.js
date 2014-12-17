@@ -21,8 +21,8 @@ gulp.task('sass', function () {
  * Optimize and move all images from app to dist
  */
 gulp.task('copy', function () {
-  return gulp.src('./src/index.html')
-    .pipe(gulp.dest('./public'));
+  gulp.src('./src/index.html').pipe(gulp.dest('./public'));
+  gulp.src(['./src/fonts/**/*']).pipe(gulp.dest('./public/fonts'));
 });
 
 // Concatenate & Minify JS

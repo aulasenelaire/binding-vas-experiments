@@ -29,11 +29,11 @@ Player = React.createClass({
     }
   }
 , componentDidMount: function () {
-    document.getElementById('button-full-screen').addEventListener('click', function () {
-      if (Screenfull.enabled) {
-        Screenfull.request();
-      }
-    });
+    // document.getElementById('button-full-screen').addEventListener('click', function () {
+    //   if (Screenfull.enabled) {
+    //     Screenfull.request();
+    //   }
+    // });
 
     var self = this;
     _.delay(function () {
