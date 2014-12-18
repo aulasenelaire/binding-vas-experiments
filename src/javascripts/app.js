@@ -9,27 +9,8 @@ var React = require('react')
   , Route = Router.Route
   , Link = Router.Link
   , VasComponent = require('./components/vas/base.js')
-  , App
+  , App = require('./components/app.js')
   , routes;
-
-App = React.createClass({
-  render: function () {
-    // <button id='button-full-screen'>Open Full Screen</button>
-    return (
-      <div className="wrapper">
-        <header>
-          <i className="fa fa-bars"></i>
-          <ul>
-            <li><Link to='vas'>VAS</Link></li>
-          </ul>
-        </header>
-        <div id="content" className="content">
-          <this.props.activeRouteHandler/>
-        </div>
-      </div>
-    );
-  }
-});
 
 routes = (
   <Routes location="hash">

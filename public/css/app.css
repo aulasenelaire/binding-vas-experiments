@@ -1912,15 +1912,6 @@ td, th {
 .fa-meanpath:before {
   content: "\f20c"; }
 
-.absolute-postitioned, .full-expanded {
-  position: absolute; }
-
-.full-expanded {
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0; }
-
 /**
  * http://hugogiraudel.com/2013/04/02/items-on-circle/
  * Mixin to put items on a circle
@@ -1929,11 +1920,23 @@ td, th {
  * [3] - In case box-sizing: border-box has been enabled
  * [4] - Allows any type of direct children to be targeted
  */
+.absolute-postitioned, .full-expanded, .content {
+  position: absolute; }
+
+.full-expanded, .content {
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0; }
+
 body {
   background: black;
-  color: white; }
+  color: white;
+  font-size: 85%; }
   body a {
-    text-decoration: underline; }
+    text-decoration: none; }
+    body a:hover {
+      text-decoration: underline; }
 
 .wrapper {
   background: black;
@@ -1949,8 +1952,20 @@ body {
   .wrapper .content {
     flex-grow: 2; }
 
-.content {
-  position: relative; }
+.content:before {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 10;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.3);
+  content: '';
+  opacity: 0;
+  -webkit-transform: translate3d(100%, 0, 0);
+  transform: translate3d(100%, 0, 0);
+  -webkit-transition: opacity 0.3s, -webkit-transform 0s 0.3s;
+  transition: opacity 0.3s, transform 0s 0.3s; }
 
 header {
   text-align: right;
@@ -1969,6 +1984,25 @@ header {
     display: block;
     padding: 2px 6px; }
 
+/* Menu */
+.menu-wrap {
+  position: absolute;
+  font-weight: 700;
+  opacity: 0;
+  -webkit-transition: opacity 1s;
+  transition: opacity 1s;
+  top: 0;
+  bottom: 0;
+  background-color: #222; }
+  .menu-wrap h3 {
+    padding: 0.2em 1.2em;
+    font-size: 2em; }
+  .menu-wrap a {
+    color: #888; }
+    .menu-wrap a:hover {
+      color: white;
+      text-decoration: none; }
+
 #button-full-screen {
   position: absolute;
   left: 10px;
@@ -1978,6 +2012,85 @@ header {
   border-radius: 5px;
   padding: 2px 4px;
   color: white; }
+
+html, body, .container, .content-wrap {
+  overflow: hidden;
+  width: 100%;
+  height: 100%; }
+
+.content-wrap {
+  overflow-y: scroll;
+  -webkit-overflow-scrolling: touch;
+  -webkit-transition: -webkit-transform 0.3s;
+  transition: transform 0.3s; }
+
+/* Menu Button */
+.menu-button {
+  position: fixed;
+  opacity: 0.3;
+  z-index: 1000;
+  margin: 1em;
+  padding: 0;
+  width: 2.5em;
+  height: 2.25em;
+  border: none;
+  font-size: 1.5em;
+  background: transparent;
+  -webkit-transition: -webkit-transform 0.3s;
+  transition: transform 0.3s; }
+  .menu-button:hover {
+    opacity: 0.8; }
+  .menu-button:focus {
+    outline: none; }
+  .menu-button:active {
+    opacity: 1; }
+
+.menu-top {
+  line-height: 58px; }
+  .menu-top .profile {
+    display: inline-block;
+    padding: 8px 10px;
+    line-height: 42px; }
+    .menu-top .profile img {
+      float: left;
+      margin-right: 1em; }
+
+.menu-top .profile, .menu-side {
+  width: 300px; }
+
+.icon-list {
+  display: inline-block;
+  font-size: 1.25em; }
+  .icon-list a {
+    margin: 0 1em 0 0;
+    padding: 0; }
+
+.menu-side a {
+  display: block;
+  padding: 1.2em 2.5em;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1); }
+  .menu-side a:first-child {
+    border-top: 1px solid rgba(0, 0, 0, 0.1); }
+
+/* Shown menu */
+.show-menu .menu-wrap {
+  opacity: 1; }
+.show-menu .content-wrap, .show-menu .menu-button {
+  -webkit-transform: translate3d(300px, 0, 0);
+  transform: translate3d(300px, 0, 0); }
+.show-menu .menu-button {
+  opacity: 1; }
+.show-menu .content:before {
+  opacity: 1;
+  -webkit-transition: opacity 0.3s;
+  transition: opacity 0.3s;
+  -webkit-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0); }
+
+@media screen and (max-width: 32em) {
+  .icon-list {
+    padding-left: 1em; }
+ }
 
 .vas-display .letters {
   position: relative;

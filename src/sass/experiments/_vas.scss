@@ -1,0 +1,42 @@
+.vas-display  {
+  .letters {
+    @include putOnCircle(6, 30vw, 6vw, false);
+    margin: 20vh auto 0;
+    border: 1px solid transparent;
+
+    li {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+
+      span {
+        font-size: 2vw;
+      }
+    }
+  }
+}
+
+.vas-question {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  .vas-question-input {
+    width: 20vw;
+    input {
+      background-color: rgba(255, 255, 255, 0.1);
+      border: 1px solid white;
+      border-radius: 4px;
+      padding: 1vw;
+      width: 100%;
+      font-size: 2vw;
+      text-transform: uppercase;
+      &::-webkit-input-placeholder {
+        color: $placeholder_color;
+        text-transform: none;
+      }
+    }
+  }
+}
