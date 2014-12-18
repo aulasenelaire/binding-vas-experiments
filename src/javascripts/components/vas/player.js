@@ -8,6 +8,7 @@ var React = require('react')
   , Dispatcher = require('../../dispatcher.js')
   , VasDisplay = require('./display.js')
   , VasQuestion = require('./question.js')
+  , VasResults = require('./results.js')
   , Player;
 
 Player = React.createClass({
@@ -22,7 +23,7 @@ Player = React.createClass({
   }
 , componentDidUpdate: function () {
     var self = this;
-    if (this.state.display) {
+    if (this.state.display && !!this.props.trial) {
       _.delay(function () {
         self.setState({display: false});
       }, self.props.trial.get('duration') + self.state.display_cross_time);
@@ -35,16 +36,18 @@ Player = React.createClass({
     //   }
     // });
 
-    var self = this;
-    _.delay(function () {
-      self.setState({display: false});
-    }, self.props.trial.get('duration') + self.state.display_cross_time);
+    if (!!this.props.trial) {
+      var self = this;
+      _.delay(function () {
+        self.setState({display: false});
+      }, self.props.trial.get('duration') + self.state.display_cross_time);
+    }
   }
 , render: function() {
     var component;
 
     if (!this.props.trial) {
-      component = <div>NO more trials</div>;
+      component = <VasResults trials={this.props.trials}></VasResults>;
     } else if (this.state.display) {
       component = <VasDisplay trial={this.props.trial} display_cross_time={this.state.display_cross_time}></VasDisplay>;
     } else {

@@ -12,6 +12,7 @@ Collection = Backbone.Collection.extend({
   , initialize: function () {
       _.bindAll(this, 'dispatchCallback');
       this.dispatchToken = Dispatcher.register(this.dispatchCallback);
+      this.autoPopulate();
     }
   , comparator: function(model) {
       return model.get('executed_time').getTime();
@@ -61,7 +62,7 @@ Collection = Backbone.Collection.extend({
 
       });
 
-      this.add(trials);
+      this.add([trials[0], trials[90], trials[33], trials[131]]);
     }
   , getAlphabet: function () {
       var letters;
@@ -149,7 +150,5 @@ Collection = Backbone.Collection.extend({
 
 // the Store is an instantiated Collection; a singleton.
 vasTrialIStore = new Collection();
-
-vasTrialIStore.autoPopulate();
 
 module.exports = vasTrialIStore;

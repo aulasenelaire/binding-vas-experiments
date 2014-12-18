@@ -4,6 +4,7 @@
 
 var React = require('react')
   , _ = require("underscore")
+  , Dispatcher = require('../../dispatcher.js')
   , vasTrialsStore = require('../../stores/vas-trials.js')
   , Player = require('./player.js')
   , vas_store
@@ -28,24 +29,26 @@ VasComponent = React.createClass({
     }
   }
 , componentDidUpdate: function () {
-    this.state.trial.on('change', this.handleChange);
+    if (!!this.state.trial) {
+      this.state.trial.on('change', this.handleChange);
+    }
   }
 , componentDidMount: function () {
-    this.state.trial.on('change', this.handleChange);
+    if (!!this.state.trial) {
+      this.state.trial.on('change', this.handleChange);
+    }
+    Dispatcher.dispatch({
+      actionType: 'ui-change-bg-color'
+    , background_color: 'black'
+    });
   }
 , willComponentUnmount: function () {
-    this.state.trial.off('change', this.handleChange);
+    if (!!this.state.trial) {
+      this.state.trial.off('change', this.handleChange);
+    }
   }
 , render: function() {
-    var executed_list = _.sortBy(this.props.vasTrialsStore.where({executed: true}), function (trial) {return trial.get('executed_time')})
-      , executed = this.props.vasTrialsStore.where({executed: true}).length
-      , all_ok = this.props.vasTrialsStore.where({all_ok: true}).length
-      , all = this.props.vasTrialsStore.length;
-    return (<div>
-      executed: <span>{executed}/{all}</span><br />
-      All ok: <span>{all_ok}</span>
-      <Player trial={this.state.trial}></Player>
-    </div>);
+    return (<Player trial={this.state.trial} trials={this.props.vasTrialsStore}></Player>);
   }
 });
 

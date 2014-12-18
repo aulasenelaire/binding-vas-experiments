@@ -4,13 +4,24 @@
 
 var React = require('react/addons')
   , $ = require('jquery')
+  , uiStore = require('../stores/ui.js')
   , cx = React.addons.classSet
   , Router = require('react-router')
   , Link = Router.Link
   , App;
 
 App = React.createClass({
-  changeButtonClass: function (is_open) {
+  getDefaultProps: function() {
+    return {
+      ui: uiStore
+    };
+  }
+, getInitialState: function() {
+    return {
+      background_color: 'white'
+    };
+  }
+, changeButtonClass: function (is_open) {
     var $button_icon = $('.js-off-canvas-button .js-icon')
       , classes = cx({
         'js-icon': true
@@ -39,11 +50,25 @@ App = React.createClass({
   }
 , componentDidMount: function () {
     $('.js-menu-side a').on('click', this.onContentClick);
+    this.props.ui.on('change:background_color', this.handleBackgroundColorChange);
+  }
+, willComponentUnmount: function () {
+    this.props.ui.off('change:background_color', this.handleBackgroundColorChange);
+  }
+, handleBackgroundColorChange: function () {
+    this.setState({background_color: this.props.ui.get('background_color')});
   }
 , render: function () {
     // <button id='button-full-screen'>Open Full Screen</button>
+    var defualt_classes;
+
+    defualt_classes = cx({
+      'js-container': true
+    , 'container': true
+    });
+
     return (
-      <div className='js-container container'>
+      <div className={defualt_classes + ' ' + this.state.background_color}>
         <div className='menu-wrap'>
           <h3>Experimentos</h3>
           <nav className='js-menu-side menu-side'>

@@ -23,16 +23,16 @@ Model.getPositions = function () {
   });
 };
 
-Model.getMissedLetters = function (response) {
-  return _.difference(this.getLetters(), response);
+Model.getMissedLetters = function (letters, response) {
+  return _.difference(letters, response);
 };
 
-Model.getSuccessLetters = function (response) {
-  return _.intersection(this.getLetters(), response);
+Model.getSuccessLetters = function (letters, response) {
+  return _.intersection(letters, response);
 };
 
-Model.getFailedLetters = function (response) {
-  return _.difference(response, this.getLetters());
+Model.getFailedLetters = function (letters, response) {
+  return _.difference(response, letters);
 };
 
 Model.updateTrialWithResponse = function (playload) {
@@ -40,9 +40,9 @@ Model.updateTrialWithResponse = function (playload) {
     , letters = this.getLetters()
     , new_attributes = {}
     , response = playload.response.split('')
-    , missed_letters = this.getMissedLetters(response)
-    , successes_letters = this.getSuccessLetters(response)
-    , failed_letters = this.getFailedLetters(response)
+    , missed_letters = this.getMissedLetters(letters, response)
+    , successes_letters = this.getSuccessLetters(letters, response)
+    , failed_letters = this.getFailedLetters(letters, response)
     , all_ok = !missed_letters.length;
 
   new_attributes = {
@@ -53,7 +53,8 @@ Model.updateTrialWithResponse = function (playload) {
   , missed_letters: missed_letters.join('')
   , successes_letters: successes_letters.join('')
   , failed_letters: failed_letters.join('')
-  , letters: letters.join('')
+  , failed_count: failed_letters.length
+  , letters_string: letters.join('')
   , all_ok: all_ok
   , executed_time: new Date()
   };
