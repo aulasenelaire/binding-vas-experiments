@@ -34,8 +34,8 @@ set :rvm_type, :user
 # Bundler tasks
 require 'bundler/capistrano'
 
-set :application, "sincapun"
-set :repository,  "git@github.com:stulentsev/sincapun.git"
+set :application, 'binding-vas-experiments'
+set :repository,  'git@github.com:aulasenelaire/binding-vas-experiments.git'
 
 set :scm, :git
 
@@ -46,18 +46,18 @@ set(:run_method) { use_sudo ? :sudo : :run }
 # This is needed to correctly handle sudo password prompt
 default_run_options[:pty] = true
 
-set :user, "myname"
+set :user, 'app'
 set :group, user
 set :runner, user
 
-set :host, "#{user}@myhost" # We need to be able to SSH to that box as this user.
+set :host, "#{user}@188.226.201.127" # We need to be able to SSH to that box as this user.
 role :web, host
 role :app, host
 
 set :rails_env, :production
 
 # Where will it be located on a server?
-set :deploy_to, "/srv/#{application}"
+set :deploy_to, "/home/app/apps/#{application}"
 set :unicorn_conf, "#{deploy_to}/current/config/unicorn.rb"
 set :unicorn_pid, "#{deploy_to}/shared/pids/unicorn.pid"
 
