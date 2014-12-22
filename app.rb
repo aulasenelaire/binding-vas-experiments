@@ -1,7 +1,7 @@
 require 'sinatra'
 
 class BindingVasExperiments < Sinatra::Base
-  get '/' do
+  get '/hello' do
     "Hello, world!"
   end
 end

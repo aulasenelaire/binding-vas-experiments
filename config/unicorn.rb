@@ -24,8 +24,7 @@ before_exec do |server|
 end
 
 before_fork do |server, worker|
-  defined?(ActiveRecord::Base) and
-      ActiveRecord::Base.connection.disconnect!
+  # defined?(ActiveRecord::Base) and ActiveRecord::Base.connection.disconnect!
 
   # zero downtime deploy magic:
   # if unicorn is already running, ask it to start a new process and quit.
@@ -41,6 +40,5 @@ end
 after_fork do |server, worker|
 
   # re-establish activerecord connections.
-  defined?(ActiveRecord::Base) and
-      ActiveRecord::Base.establish_connection
+  # defined?(ActiveRecord::Base) and ActiveRecord::Base.establish_connection
 end
