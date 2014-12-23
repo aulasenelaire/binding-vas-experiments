@@ -23,6 +23,7 @@ gulp.task('sass', function () {
 gulp.task('copy', function () {
   gulp.src('./src/index.html').pipe(gulp.dest('./public'));
   gulp.src(['./src/fonts/**/*']).pipe(gulp.dest('./public/fonts'));
+  gulp.src(['./src/images/**/*']).pipe(gulp.dest('./public/images'));
 });
 
 // Concatenate & Minify JS
@@ -45,15 +46,16 @@ gulp.task('watch', function () {
   gulp.watch('./src/sass/**/*.scss', ['sass']);
 });
 
-gulp.task('webserver', function() {
-  gulp.src('public')
-    .pipe(webserver({
-      livereload: false,
-      directoryListing: false,
-      open: false,
-      fallback: 'index.html'
-    }));
-});
+// Not used. Serving assets from Sinatra app
+// gulp.task('webserver', function() {
+//   gulp.src('public')
+//     .pipe(webserver({
+//       livereload: false,
+//       directoryListing: false,
+//       open: false,
+//       fallback: 'index.html'
+//     }));
+// });
 
 // Default Task
-gulp.task('default', ['copy', 'scripts', 'sass', 'webserver', 'watch']);
+gulp.task('default', ['copy', 'scripts', 'sass', 'watch']);

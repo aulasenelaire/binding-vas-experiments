@@ -51,6 +51,19 @@ App = React.createClass({
 , componentDidMount: function () {
     $('.js-menu-side a').on('click', this.onContentClick);
     this.props.ui.on('change:background_color', this.handleBackgroundColorChange);
+
+    $.get('/config', function(result) {
+      if (this.isMounted()) {
+        var dropbox_client = new Dropbox.Client({key: result.dropbox_key});
+        dropbox_client.authDriver(new Dropbox.AuthDriver.Popup({
+            receiverUrl: window.location.origin + '/drobox_oauth_receiver'
+        }));
+
+        this.setState({
+          dropbox_client: dropbox_client
+        });
+      }
+    }.bind(this));
   }
 , willComponentUnmount: function () {
     this.props.ui.off('change:background_color', this.handleBackgroundColorChange);

@@ -5,13 +5,15 @@
 var React = require('react')
   , _ = require("underscore")
   , Dispatcher = require('../../dispatcher.js')
+  , DropboxAuth = require('../../react-mixins/dropbox-auth.js')
   , vasTrialsStore = require('../../stores/vas-trials.js')
-  , Player = require('./player.js')
+  , Player = React.createFactory(require('./player.js'))
   , vas_store
   , VasComponent;
 
 VasComponent = React.createClass({
-  getDefaultProps: function() {
+  mixins: [DropboxAuth]
+, getDefaultProps: function() {
     return {
       vasTrialsStore: vasTrialsStore
     };

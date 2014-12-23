@@ -1,3 +1,5 @@
 node_modules/
 assets/bundle.js
 .DS_Store
+public
+.env
