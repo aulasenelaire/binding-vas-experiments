@@ -13,11 +13,11 @@ var React = require('react')
   , routes;
 
 routes = (
-  <Routes location="hash">
-    <Route name="app" path="/" handler={App}>
-      <Route name="vas" handler={VasComponent}/>
-    </Route>
-  </Routes>
+  <Route name="app" path="/" handler={App}>
+    <Route name="vas" handler={VasComponent}/>
+  </Route>
 );
 
-React.renderComponent(routes, document.body);
+Router.run(routes, Router.HistoryLocation, function (Handler) {
+  React.render(<Handler />, document.body);
+});

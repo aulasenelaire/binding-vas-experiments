@@ -7,7 +7,7 @@ var React = require('react')
   , Dispatcher = require('../../dispatcher.js')
   , DropboxAuth = require('../../react-mixins/dropbox-auth.js')
   , vasTrialsStore = require('../../stores/vas-trials.js')
-  , Player = React.createFactory(require('./player.js'))
+  , Player = require('./player.js')
   , vas_store
   , VasComponent;
 
@@ -50,7 +50,7 @@ VasComponent = React.createClass({
     }
   }
 , render: function() {
-    return (<Player trial={this.state.trial} trials={this.props.vasTrialsStore}></Player>);
+    return <Player trial={this.state.trial} trials={this.props.vasTrialsStore}></Player>;
   }
 });
 

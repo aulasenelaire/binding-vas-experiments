@@ -3,6 +3,8 @@
 "use strict";
 
 var React = require('react/addons')
+  , Router = require('react-router')
+  , RouteHandler = Router.RouteHandler
   , $ = require('jquery')
   , uiStore = require('../stores/ui.js')
   , cx = React.addons.classSet
@@ -80,24 +82,22 @@ App = React.createClass({
     , 'container': true
     });
 
-    return (
-      <div className={defualt_classes + ' ' + this.state.background_color}>
-        <div className='menu-wrap'>
-          <h3>Experimentos</h3>
-          <nav className='js-menu-side menu-side'>
-            <Link to='vas'>Visual Atention Span</Link>
-          </nav>
-        </div>
-        <button className='js-off-canvas-button menu-button' onClick={this.onMenuButtonClick}>
-          <i className='js-icon fa fa-2x fa-bars'></i>
-        </button>
-        <div className='content-wrap' onClick={this.onContentClick}>
-          <div id='content' className='content'>
-            <this.props.activeRouteHandler/>
-          </div>
+    return <div className={defualt_classes + ' ' + this.state.background_color}>
+      <div className='menu-wrap'>
+        <h3>Experimentos</h3>
+        <nav className='js-menu-side menu-side'>
+          <Link to='vas'>Visual Atention Span</Link>
+        </nav>
+      </div>
+      <button className='js-off-canvas-button menu-button' onClick={this.onMenuButtonClick}>
+        <i className='js-icon fa fa-2x fa-bars'></i>
+      </button>
+      <div className='content-wrap' onClick={this.onContentClick}>
+        <div id='content' className='content'>
+          <RouteHandler />
         </div>
       </div>
-    );
+    </div>;
   }
 });
 

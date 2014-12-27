@@ -23,8 +23,8 @@ VasDisplay = React.createClass({
     var letters;
 
     if (!this.state.display_only_cross) {
-      letters = _.map(this.props.trial.get('letters'), function (letter) {
-        return (<li data-position={letter.position}>
+      letters = _.map(this.props.trial.get('letters'), function (letter, index) {
+        return (<li data-position={letter.position} key={index}>
           <span>{letter.value.toUpperCase()}</span>
         </li>);
       });

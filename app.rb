@@ -26,4 +26,8 @@ class BindingVasExperiments < Sinatra::Base
       dropbox_key: settings.dropbox_key
     })
   end
+
+  get '/*' do
+    File.read(File.join('public', 'index.html'))
+  end
 end
