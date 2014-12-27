@@ -32,7 +32,7 @@ VasResults = React.createClass({
         successes = trial.get('successes_letters') + '(' + trial.get('successes_count') + ')';
       }
 
-      return (<tr>
+      return (<tr key={index}>
         <td>{index + 1}</td>
         <td>{trial.get('letters_string')} ({trial.get('count')})</td>
         <td>{successes}</td>
