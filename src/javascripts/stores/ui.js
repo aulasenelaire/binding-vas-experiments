@@ -17,15 +17,14 @@ UiStore.initialize = function () {
 };
 
 UiStore.dispatchCallback = function (payload) {
-  var self = this;
-  switch(payload.actionType) {
-    case 'ui-change-bg-color':
-      self.set({background_color: payload.background_color});
-    case 'intialize-dropbox':
-      this.set({
-        dropbox_client: payload.dropbox_client
-      , datastore_manager: payload.datastore_manager
-      });
+
+  if (payload.actionType === 'ui-change-bg-color') {
+    this.set({background_color: payload.background_color});
+  } else if (payload.actionType === 'intialize-dropbox') {
+    this.set({
+      dropbox_client: payload.dropbox_client
+    , datastore_manager: payload.datastore_manager
+    });
   }
 };
 
