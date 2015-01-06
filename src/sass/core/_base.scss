@@ -11,6 +11,19 @@ body {
 
 }
 
+.loading-data {
+  position: fixed;
+  font-size: 0.9em;
+  text-align: center;
+  border-bottom-left-radius: 2px;
+  border-bottom-right-radius: 2px;
+  background-color: #ffc;
+  right: 20px;
+  top: 0;
+  padding: 5px;
+  z-index: 2000;
+}
+
 .wrapper {
   background: black;
   position: absolute;

@@ -1,22 +1,13 @@
-var DropboxAuth;
-
-DropboxAuth = {
+'use strict';
+module.exports = {
   statics: {
-    willTransitionTo: function (transition) {
-      // this.props.dropbox_client.authenticate({interactive: false}, function (err, client) {
-      //   if (!client.isAuthenticated()) {
-      //     transition.redirect('/login');
-      //     return;
-      //   } else {
-      //     console.log('sss');
-      //   }
-      // });
-      // if (!auth.loggedIn()) {
-      //   Login.attemptedTransition = transition;
-      //   transition.redirect('/login');
-      // }
+    willTransitionTo: function (transition, params, query) {
+      window.dropbox.authenticate({interactive: false}, function (err, client) {
+        if (!client.isAuthenticated()) {
+          transition.redirect('/login');
+          return;
+        }
+      });
     }
   }
 };
-
-module.exports = DropboxAuth;

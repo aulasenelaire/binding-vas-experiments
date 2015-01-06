@@ -6,21 +6,16 @@ var React = require('react/addons')
   , Router = require('react-router')
   , RouteHandler = Router.RouteHandler
   , $ = require('jquery')
-  , uiStore = require('../stores/ui.js')
   , cx = React.addons.classSet
   , Router = require('react-router')
   , Link = Router.Link
   , App;
 
 App = React.createClass({
-  getDefaultProps: function() {
-    return {
-      ui: uiStore
-    };
-  }
-, getInitialState: function() {
+  getInitialState: function() {
     return {
       background_color: 'white'
+    , loading: false
     };
   }
 , changeButtonClass: function (is_open) {
@@ -51,31 +46,42 @@ App = React.createClass({
     this.changeButtonClass(!is_open);
   }
 , componentDidMount: function () {
+    var timer
+      , self = this;
+
     $('.js-menu-side a').on('click', this.onContentClick);
-    this.props.ui.on('change:background_color', this.handleBackgroundColorChange);
+    this.props.uiStore.on('change:background_color', this.handleBackgroundColorChange);
 
-    $.get('/config', function(result) {
-      if (this.isMounted()) {
-        var dropbox_client = new Dropbox.Client({key: result.dropbox_key});
-        dropbox_client.authDriver(new Dropbox.AuthDriver.Popup({
-            receiverUrl: window.location.origin + '/drobox_oauth_receiver'
-        }));
+    this.props.uiStore.on('loadStart', function () {
+      clearTimeout(timer);
+      // for slow responses, indicate the app is thinking
+      // otherwise its fast enough to just wait for the
+      // data to load
+      timer = setTimeout(function () {
+        self.setState({loading: true});
+      }, 300);
+    });
 
-        this.setState({
-          dropbox_client: dropbox_client
-        });
-      }
-    }.bind(this));
+    this.props.uiStore.on('loadEnd', function () {
+      clearTimeout(timer);
+      self.setState({loading: false});
+    });
   }
 , willComponentUnmount: function () {
-    this.props.ui.off('change:background_color', this.handleBackgroundColorChange);
+    this.props.uiStore.off('change:background_color', this.handleBackgroundColorChange);
   }
 , handleBackgroundColorChange: function () {
-    this.setState({background_color: this.props.ui.get('background_color')});
+    this.setState({background_color: this.props.uiStore.get('background_color')});
   }
 , render: function () {
     // <button id='button-full-screen'>Open Full Screen</button>
-    var defualt_classes;
+    var defualt_classes
+      , loading_classes;
+
+    loading_classes = cx({
+      'loading-data': true
+    , 'js-hide': !this.state.loading
+    });
 
     defualt_classes = cx({
       'js-container': true
@@ -83,10 +89,14 @@ App = React.createClass({
     });
 
     return <div className={defualt_classes + ' ' + this.state.background_color}>
+
+      <div className={loading_classes}>Cargando datos &hellip;</div>
+
       <div className='menu-wrap'>
         <h3>Experimentos</h3>
         <nav className='js-menu-side menu-side'>
           <Link to='vas'>Visual Atention Span</Link>
+          <Link to='login'>Login</Link>
         </nav>
       </div>
       <button className='js-off-canvas-button menu-button' onClick={this.onMenuButtonClick}>

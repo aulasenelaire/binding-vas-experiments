@@ -3,13 +3,16 @@
 "use strict";
 
 var Login
+  , $ = require('jquery')
   , Router = require('react-router')
   , React = require('react');
 
 Login = React.createClass({
-  mixins: [ Router.Navigation ]
+  mixins: [Router.Navigation]
 , statics: {
-    attemptedTransition: null
+    fetchData: function(params, query) {
+      return $.get('/config');
+    }
   }
 , getInitialState: function () {
     return {

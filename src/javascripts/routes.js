@@ -1,14 +1,11 @@
 /** @jsx React.DOM */
+'use strict';
 
-"use strict";
-
-var Home
-  , React = require('react')
+var React = require('react')
   , Router = require('react-router')
   , Route = Router.Route
   , DefaultRoute = Router.DefaultRoute
   , NotFoundRoute = Router.NotFoundRoute;
-
 
 module.exports = (
   <Route name="app" path="/" handler={require('./components/app.js')}>

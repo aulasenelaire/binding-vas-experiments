@@ -11,6 +11,7 @@ var React = require('react')
   , vas_store
   , VasComponent;
 
+
 VasComponent = React.createClass({
   mixins: [DropboxAuth]
 , getDefaultProps: function() {

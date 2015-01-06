@@ -3,6 +3,7 @@
 "use strict";
 
 var Home
+  , DropboxAuth = require('../../react-mixins/dropbox-auth.js')
   , React = require('react');
 
 Home = React.createClass({
