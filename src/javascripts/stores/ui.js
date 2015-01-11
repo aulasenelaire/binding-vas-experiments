@@ -23,9 +23,9 @@ UiStore.dispatchCallback = function (payload) {
   } else if (payload.actionType === 'login_success') {
     this.set({
       dropbox_client: payload.dropbox_client
-    , datastore_manager: payload.datastore_manager
     });
-    router.transitionTo(payload.redirect_to);
+
+    router.transitionTo(payload.redirect_to || '/');
   }
 };
 

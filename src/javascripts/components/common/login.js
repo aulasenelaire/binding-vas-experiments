@@ -3,11 +3,11 @@
 "use strict";
 
 var Login
+  , React = require('react')
   , $ = require('jquery')
   , Dispatcher = require('../../dispatcher.js')
   , Router = require('react-router')
-  , router = require('../../router.js')
-  , React = require('react');
+  , DropboxLib = require('../../lib/dropbox.js');
 
 Login = React.createClass({
   mixins: [Router.Navigation, Router.State]
@@ -17,23 +17,21 @@ Login = React.createClass({
     , redirect_to: this.getQuery().redirect_to
     };
   }
-, makeAuthentication: function (error, client) {
-    var self = this;
-    client.getAccountInfo(function (err, account_info) {
+, onLoginWithDropbox: function (event) {
+    var redirect_to = this.state.redirect_to;
+    DropboxLib.authenticate()
+    .then(DropboxLib.getAccountInfo)
+    .then(function (promise_response) {
       Dispatcher.dispatch({
         actionType: 'login_success'
-      , dropbox_client: account_info
-      , datastore_manager: client.getDatastoreManager()
-      , redirect_to: self.state.redirect_to
+      , dropbox_client: promise_response.account_info
+      , redirect_to: redirect_to
       });
     });
   }
-, handleClick: function (event) {
-    window.dropbox.authenticate(this.makeAuthentication);
-  }
 , render: function () {
     return (<div>
-        <button type="button" onClick={this.handleClick}>Accede con Dropbox</button>
+        <button type="button" onClick={this.onLoginWithDropbox}>Accede con Dropbox</button>
       </div>
     );
   }

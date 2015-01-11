@@ -6,6 +6,7 @@ var React = require('react/addons')
   , Router = require('react-router')
   , Dispatcher = require('../dispatcher.js')
   , RouteHandler = Router.RouteHandler
+  , DropboxLib = require('../lib/dropbox.js')
   , $ = require('jquery')
   , cx = React.addons.classSet
   , Router = require('react-router')
@@ -41,9 +42,10 @@ App = React.createClass({
     };
   }
 , onClickLogout: function (event) {
+    var dropbox = DropboxLib.getClient();
     event.preventDefault();
-    window.dropbox.signOut();
-    window.location.reload();
+    dropbox.signOut();
+    window.location.replace('/');
   }
 , onMenuButtonClick: function () {
     var $container = $('.js-container')
