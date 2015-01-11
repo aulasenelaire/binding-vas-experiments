@@ -3,6 +3,7 @@
 var Backbone = require("backbone")
   , _ = require("underscore")
   , Dispatcher = require('../dispatcher.js')
+  , router = require('../router.js')
   , UiStore;
 
 UiStore = {
@@ -17,14 +18,14 @@ UiStore.initialize = function () {
 };
 
 UiStore.dispatchCallback = function (payload) {
-
   if (payload.actionType === 'ui-change-bg-color') {
     this.set({background_color: payload.background_color});
-  } else if (payload.actionType === 'intialize-dropbox') {
+  } else if (payload.actionType === 'login_success') {
     this.set({
       dropbox_client: payload.dropbox_client
     , datastore_manager: payload.datastore_manager
     });
+    router.transitionTo(payload.redirect_to);
   }
 };
 

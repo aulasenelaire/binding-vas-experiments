@@ -125,14 +125,14 @@ all([$.get('/config')]).then(function (results) {
   window.dropbox = dropbox_instance.dropbox;
 
   // If user is authenticated we store it in UI store
-  if (!!dropbox_instance.account_info) {
+  if (dropbox_instance.account_info) {
     uiStore.set({
       dropbox_client: dropbox_instance.account_info
     , datastore_manager: dropbox_instance.dropbox.getDatastoreManager()
     });
   }
 
-  Router.run(routes, Router.HistoryLocation, function (Handler, state) {
+  router.run(function (Handler, state) {
     renderState.Handler = Handler;
     renderState.routerState = state;
     render();

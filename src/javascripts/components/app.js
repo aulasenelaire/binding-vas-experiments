@@ -83,7 +83,9 @@ App = React.createClass({
     this.setState({background_color: this.props.uiStore.get('background_color')});
   }
 , handleDropboxAccountChange: function () {
-    this.setState({dropbox_account: this.props.uiStore.get('dropbox_client')});
+    this.setState({
+      dropbox_account: this.props.uiStore.get('dropbox_client')
+    });
   }
 , render: function () {
     // <button id='button-full-screen'>Open Full Screen</button>
@@ -102,7 +104,7 @@ App = React.createClass({
     , 'container': true
     });
 
-    if (!!this.state.dropbox_account) {
+    if (this.state.dropbox_account) {
       dropboxUser = <div className='absolute-postitioned sidebar-profile'>
         {this.state.dropbox_account.name}
         <a href="#" onClick={self.onClickLogout}>Logout</a>
