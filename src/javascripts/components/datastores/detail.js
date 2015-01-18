@@ -9,9 +9,9 @@ var React = require('react')
   , Component;
 
 Component = React.createClass({
-  mixins: [DropboxAuth, Router.Navigation, Router.State]
+  mixins: [Router.Navigation, Router.State]
 , getInitialState: function () {
-    console.log(this.getParams());
+    var datastore_id = this.getParams().datastore_id;
     return {};
   }
 , render: function() {
