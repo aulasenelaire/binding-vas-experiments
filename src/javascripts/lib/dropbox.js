@@ -2,6 +2,7 @@
 
 var _ = require("underscore")
   , when = require('when')
+  , _dropbox_data_store_manger
   , _dropbox  = null;
 
 /*
@@ -73,7 +74,66 @@ function authenticate (options) {
     deferred.resolve({dropbox: dropbox});
   });
   return deferred.promise;
-}
+};
+
+/*
+ * List all user datastores
+ *
+ * @return {Promise}
+ */
+function listDatastores () {
+  var manager = getDataStoreManager()
+    , deferred = when.defer();
+
+  manager.listDatastores(function (error, datastore_list) {
+    if (error) {
+      console.log( 'Datastore error: ' + error );
+    }
+    deferred.resolve({datastore_list: datastore_list});
+  });
+
+  return deferred.promise;
+};
+
+/*
+ * Create a public Datastore
+ *
+ * @return {Promise}
+ */
+function createDatastore () {
+  var manager = getDataStoreManager()
+    , deferred = when.defer();
+
+  manager.createDatastore(function (error, new_datastore) {
+    if (error) {
+      console.log( 'Datastore error: ' + error );
+    }
+    deferred.resolve({new_datastore: new_datastore});
+  });
+
+  return deferred.promise;
+};
+
+/*
+ * Delete a datastore
+ *
+ * @param {String} datastoreId
+ * @return {Promise}
+ */
+function deleteDatastore (datastoreId) {
+  var manager = getDataStoreManager()
+    , deferred = when.defer();
+
+  manager.deleteDatastore(datastoreId, function (error) {
+    if (error) {
+      console.log( 'Datastore error: ' + error );
+    }
+
+    deferred.resolve({delete_data_store: true});
+  });
+
+  return deferred.promise;
+};
 
 /**
  * This is a singleton to return dropbox
@@ -85,10 +145,30 @@ function authenticate (options) {
   return _dropbox;
 };
 
+/**
+ * Intialize or get DataStore Manager
+ *
+ * @return {DropboxDataStoreManager}
+ */
+ function getDataStoreManager () {
+  if (_dropbox_data_store_manger) {
+    return _dropbox_data_store_manger;
+  }
+
+  var client = getClient();
+
+  _dropbox_data_store_manger = client.getDatastoreManager();
+  return _dropbox_data_store_manger;
+};
+
 exports.initializeDropbox = initializeDropbox;
 exports.getAccountInfo = getAccountInfo;
 exports.authenticate = authenticate;
 exports.getClient = getClient;
+exports.listDatastores = listDatastores;
+exports.createDatastore = createDatastore;
+exports.deleteDatastore = deleteDatastore;
+exports.getDataStoreManager = getDataStoreManager;
 
 /**
  * ***************

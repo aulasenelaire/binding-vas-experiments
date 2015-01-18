@@ -121,6 +121,7 @@ App = React.createClass({
         <h3>Experimentos</h3>
         <nav className='js-menu-side menu-side'>
           <Link to='vas'>Visual Atention Span</Link>
+          <Link to='datastores'>Data stores Sandbox</Link>
         </nav>
         {dropboxUser}
       </div>
